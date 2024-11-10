@@ -12,7 +12,15 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docke
 sudo apt update -y
 sudo apt install -y docker-ce docker-ce-cli containerd.io
 
-# Verify the installation
+# Verify the Docker installation
 sudo systemctl start docker
 sudo systemctl enable docker
 docker --version
+
+# Install Docker Compose
+DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Verify the Docker Compose installation
+docker-compose --version
